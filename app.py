@@ -84,14 +84,20 @@ def login():
 
 @app.route("/logout")
 def logout():
-    """Logout route."""
+    """logout"""
 
     session.pop("username")
     return redirect("/")
 
 
-@app.route('/secret', methods=['GET'])
-def secret():
-    """secret route part 3....."""
+@app.route("/users/<username>")
+def show_user(username):
+    """page for logged in users"""
 
-    return f{"You Made It!"}
+    if "username" not in session or username != session['username']:
+        raise Unauthorized()
+
+    user = User.query.get(username)
+    form = DeleteForm()
+
+    return render_template("users/show.html", user=user, form=form)
