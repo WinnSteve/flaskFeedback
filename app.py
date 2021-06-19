@@ -82,6 +82,14 @@ def login():
     return render_template("users/login.html", form=form)
 
 
+@app.route("/logout")
+def logout():
+    """Logout route."""
+
+    session.pop("username")
+    return redirect("/")
+
+
 @app.route('/secret', methods=['GET'])
 def secret():
     """secret route part 3....."""
